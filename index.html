@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Tree 🌙</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;background:#090711;color:#fff}
+body{overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:
+radial-gradient(circle at 20% 20%,rgba(255,105,180,.13),transparent 25%),
+radial-gradient(circle at 80% 30%,rgba(126,87,255,.16),transparent 28%),
+radial-gradient(circle at 50% 90%,rgba(255,185,90,.08),transparent 25%);pointer-events:none}
+.stars{position:fixed;inset:0;pointer-events:none;opacity:.7}
+.star{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{from{opacity:.2;transform:scale(.7)}to{opacity:1;transform:scale(1.2)}}
+.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+.card{width:min(720px,100%);text-align:center;position:relative;z-index:2}
+.small{letter-spacing:4px;text-transform:uppercase;font:12px Arial,sans-serif;color:#c9bddb}
+h1{font-size:clamp(42px,11vw,88px);line-height:.95;margin:18px 0 12px}
+.gradient{background:linear-gradient(90deg,#ffd7ef,#fff,#d9c7ff,#ffd7ef);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{font:16px Arial,sans-serif;color:#cfc7d9;line-height:1.7}
+button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:white;border-radius:999px;padding:14px 24px;margin-top:24px;font-weight:bold;cursor:pointer;backdrop-filter:blur(10px);transition:.25s}
+button:hover{transform:translateY(-2px);background:rgba(255,255,255,.13)}
+#letter{display:none;margin-top:28px;padding:30px 24px;border-radius:28px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.13);box-shadow:0 20px 70px rgba(0,0,0,.35);text-align:left}
+.hello{font-size:28px;margin:0 0 20px;text-align:center}
+.message{font:17px/1.9 Arial,sans-serif;color:#eee;white-space:pre-line}
+.highlight{color:#ffd0e8;font-weight:bold}
+.signature{text-align:right;margin-top:28px;font-size:24px}
+.heart{display:inline-block;animation:beat 1s infinite}
+@keyframes beat{50%{transform:scale(1.18)}}
+#secret{display:none;margin-top:18px;color:#aaa;font:12px Arial,sans-serif}
+.reveal{animation:reveal .8s ease both}
+@keyframes reveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.footer{margin-top:25px;font:11px Arial,sans-serif;color:#777}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<section class="screen">
+  <main class="card">
+    <div class="small">a very late delivery · but still from CN</div>
+    <h1 class="gradient">Hey, Tree 🌙</h1>
+    <div class="subtitle">This page has absolutely no suspicious purpose.<br>Okay… maybe one. 😅</div>
+    <button id="open">Tap here. I promise it's not creepy. 👀</button>
+
+    <div id="letter">
+      <div class="hello">Dear Tree, ✨</div>
+      <div class="message">sOOry for the hope which I gave to you that i will make a website for your bday to surprise you.
+
+Mistakenly I was forgot about that… 😭😂
+
+So please don't feel creepy 😅😅
+
+But late is better than never, right?
+
+<strong>Belated Happy Birthday, Tree! 🎂❤️</strong>
+
+I know this is arriving a little… VERY late,
+but I still wanted to keep my promise in my own weird little way.
+
+So here it is —
+a tiny website,
+made especially for you,
+because apparently a normal “Happy Birthday” message was not enough. 😂
+
+And yes…
+
+<strong>#nycinglish ❤️</strong></div>
+      <div class="signature">— CN <span class="heart">♥</span></div>
+    </div>
+
+    <div id="secret">P.S. You actually opened it. Mission accomplished. 😌</div>
+    <div class="footer">made with questionable timing & genuine friendship</div>
+  </main>
+</section>
+
+<script>
+const stars=document.getElementById('stars');
+for(let i=0;i<75;i++){
+  const s=document.createElement('span'); s.className='star';
+  s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
+  s.style.animationDelay=(Math.random()*2)+'s';
+  s.style.opacity=(.2+Math.random()*.7);
+  stars.appendChild(s);
+}
+document.getElementById('open').onclick=()=>{
+  document.getElementById('letter').style.display='block';
+  document.getElementById('letter').classList.add('reveal');
+  document.getElementById('open').style.display='none';
+  document.getElementById('secret').style.display='block';
+  for(let i=0;i<18;i++){
+    const e=document.createElement('div'); e.textContent=['❤️','✨','🌙','💗'][i%4];
+    e.style.position='fixed'; e.style.left=(45+Math.random()*10)+'%'; e.style.top='45%';
+    e.style.fontSize=(18+Math.random()*18)+'px'; e.style.zIndex=10; e.style.pointerEvents='none';
+    document.body.appendChild(e);
+    const x=(Math.random()-.5)*420, y=-(120+Math.random()*360);
+    e.animate([{transform:'translate(0,0) scale(.6)',opacity:1},{transform:`translate(${x}px,${y}px) scale(1.4)`,opacity:0}],{duration:1200+Math.random()*700,easing:'cubic-bezier(.2,.8,.2,1)'}).onfinish=()=>e.remove();
+  }
+}
+</script>
+</body>
+</html>
