@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Tree 🌙</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;background:#090711;color:#fff}
+body{overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:
+radial-gradient(circle at 20% 20%,rgba(255,105,180,.13),transparent 25%),
+radial-gradient(circle at 80% 30%,rgba(126,87,255,.16),transparent 28%),
+radial-gradient(circle at 50% 90%,rgba(255,185,90,.08),transparent 25%);pointer-events:none}
+.stars{position:fixed;inset:0;pointer-events:none;opacity:.7}
+.star{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{from{opacity:.2;transform:scale(.7)}to{opacity:1;transform:scale(1.2)}}
+.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+.card{width:min(720px,100%);text-align:center;position:relative;z-index:2}
+.small{letter-spacing:4px;text-transform:uppercase;font:12px Arial,sans-serif;color:#c9bddb}
+h1{font-size:clamp(42px,11vw,88px);line-height:.95;margin:18px 0 12px}
+.gradient{background:linear-gradient(90deg,#ffd7ef,#fff,#d9c7ff,#ffd7ef);-webkit-background-clip:text;background-clip:text;color:transparent}
+.subtitle{font:16px Arial,sans-serif;color:#cfc7d9;line-height:1.7}
+button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:white;border-radius:999px;padding:14px 24px;margin-top:24px;font-weight:bold;cursor:pointer;backdrop-filter:blur(10px);transition:.25s}
+button:hover{transform:translateY(-2px);background:rgba(255,255,255,.13)}
+#letter{display:none;margin-top:28px;padding:30px 24px;border-radius:28px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.13);box-shadow:0 20px 70px rgba(0,0,0,.35);text-align:left}
+.hello{font-size:28px;margin:0 0 20px;text-align:center}
+.message{font:17px/1.9 Arial,sans-serif;color:#eee;white-space:pre-line}
+.highlight{color:#ffd0e8;font-weight:bold}
+.signature{text-align:right;margin-top:28px;font-size:24px}
+.heart{display:inline-block;animation:beat 1s infinite}
+@keyframes beat{50%{transform:scale(1.18)}}
+#secret{display:none;margin-top:18px;color:#aaa;font:12px Arial,sans-serif}
+.reveal{animation:reveal .8s ease both}
+@keyframes reveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.footer{margin-top:25px;font:11px Arial,sans-serif;color:#777}
+
+
+/* Birthday surprise interaction layer */
+.surprise-stage{display:none;margin:28px auto 0;max-width:720px;padding:24px 16px;border-radius:28px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 60px rgba(0,0,0,.28);text-align:center}
+.cake-wrap{position:relative;width:min(360px,92vw);height:190px;margin:0 auto}
+.cake{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:230px;height:78px;border-radius:15px;background:linear-gradient(#ffacd0,#d95796);box-shadow:0 12px 25px rgba(0,0,0,.3)}
+.cake:before{content:"";position:absolute;left:0;right:0;top:16px;height:16px;background:#ffe0ed;border-radius:50%}
+.candles{position:absolute;z-index:5;left:50%;top:25px;transform:translateX(-50%);display:flex;gap:27px}
+.candle{position:relative;width:11px;height:48px;border-radius:5px;background:repeating-linear-gradient(45deg,#fff 0 7px,#ff72ae 7px 14px)}
+.flame{position:absolute;left:50%;top:-23px;width:15px;height:23px;border-radius:60% 40% 60% 40%;transform:translateX(-50%);background:#ffd35a;box-shadow:0 0 14px #ff9c38,0 0 28px rgba(255,157,56,.7);animation:flicker .16s infinite alternate}
+@keyframes flicker{from{transform:translateX(-50%) scale(.9) rotate(-3deg)}to{transform:translateX(-50%) scale(1.1) rotate(4deg)}}
+.flame.out{animation:flameOut .55s ease forwards}
+@keyframes flameOut{to{opacity:0;transform:translate(-50%,-22px) scale(.1)}}
+.smoke{position:absolute;left:50%;top:-18px;width:8px;height:8px;border-radius:50%;background:#bbb;opacity:0}
+.smoke.show{animation:smokeUp 1.4s ease forwards}
+@keyframes smokeUp{0%{opacity:.1;transform:translate(0,0) scale(.7)}35%{opacity:.6}100%{opacity:0;transform:translate(12px,-48px) scale(3)}}
+.gift-area{display:none;margin-top:18px}
+.gift-box{position:relative;width:155px;height:130px;margin:24px auto 12px;cursor:pointer;animation:giftFloat 2.2s ease-in-out infinite}
+@keyframes giftFloat{50%{transform:translateY(-6px)}}
+.gift-base{position:absolute;left:12px;right:12px;bottom:0;height:84px;border-radius:8px;background:linear-gradient(90deg,#e95b91,#ff8ab5,#d94c84);box-shadow:0 12px 25px rgba(0,0,0,.3)}
+.gift-lid{position:absolute;left:4px;right:4px;top:22px;height:29px;border-radius:7px;background:#ff91b9;z-index:3;transition:.55s}
+.gift-ribbon-v{position:absolute;left:63px;top:20px;width:29px;height:92px;background:#ffd36b;z-index:4}
+.gift-ribbon-h{position:absolute;left:11px;right:11px;top:54px;height:22px;background:#ffd36b;z-index:2}
+.gift-bow{position:absolute;left:50%;top:1px;transform:translateX(-50%);font-size:42px;z-index:5}
+.gift-box.opened .gift-lid{transform:translateY(-57px) rotate(-6deg)}
+.chocolate{position:fixed;top:-80px;z-index:999;pointer-events:none;font-size:34px}
+#shakeStatus{min-height:22px;margin:8px auto;color:#ffd1e6;font-size:14px}
+.shake-hint{max-width:520px;margin:5px auto 12px;line-height:1.6;opacity:.9}
+.final-note{display:none;margin-top:24px;font-size:24px;line-height:1.5}
+.tap-fallback{display:none}
+
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<section class="screen">
+  <main class="card">
+    <div class="small">a very late delivery · but still from CN</div>
+    <h1 class="gradient">Hey, Tree 🌙</h1>
+    <div class="subtitle">This page has absolutely no suspicious purpose.<br>Okay… maybe one. 😅</div>
+    <button id="open">Tap here. I promise it's not creepy. 👀</button>
+
+    <div id="letter">
+      <div class="hello">Dear Tree, ✨</div>
+      <div class="message">sOOry for the hope which I gave to you that i will make a website for your bday to surprise you.
+
+Mistakenly I was forgot about that… 😭😂
+
+So please don't feel creepy 😅😅
+
+But late is better than never, right?
+
+<strong>Belated Happy Birthday, Tree! 🎂❤️</strong>
+
+I know this is arriving a little… VERY late,
+but I still wanted to keep my promise in my own weird little way.
+
+So here it is —
+a tiny website,
+made especially for you,
+because apparently a normal “Happy Birthday” message was not enough. 😂
+
+And yes…
+
+<strong>#nycinglish ❤️</strong></div>
+      <div class="signature">— CN <span class="heart">♥</span></div>
+    </div>
+
+
+    
+<div id="surpriseStage" class="surprise-stage">
+  <div class="small">one more tiny surprise...</div>
+  <h2 style="font-size:30px;margin:10px 0 4px">Make a wish, Tree 🕯️</h2>
+  <div class="cake-wrap">
+    <div class="candles">
+      <div class="candle"><span class="flame"></span><span class="smoke"></span></div>
+      <div class="candle"><span class="flame"></span><span class="smoke"></span></div>
+      <div class="candle"><span class="flame"></span><span class="smoke"></span></div>
+    </div>
+    <div class="cake"></div>
+  </div>
+  <button id="blowBtn" type="button">Blow the candles 💨</button>
+
+  <div id="giftArea" class="gift-area">
+    <h2 style="font-size:28px;margin:8px 0">Your gift is waiting 🎁</h2>
+    <p class="shake-hint">Give your phone a gentle shake and watch what happens. 📱🍫</p>
+    <div id="giftBox" class="gift-box" role="button" tabindex="0" aria-label="Birthday gift box">
+      <div class="gift-bow">🎀</div>
+      <div class="gift-lid"></div>
+      <div class="gift-base"></div>
+      <div class="gift-ribbon-h"></div>
+      <div class="gift-ribbon-v"></div>
+    </div>
+    <button id="motionBtn" type="button">Enable shake surprise 📱</button>
+    <button id="fallbackBtn" type="button" style="display:none">Open the gift 🍫</button>
+    <div id="shakeStatus"></div>
+    <div id="finalNote" class="final-note">
+      A little chocolate for you… 🍫<br>
+      and a little reminder that <span class="highlight">CN remembers. ❤️</span>
+    </div>
+  </div>
+</div>
+
+<div id="secret">P.S. You actually opened it. Mission accomplished. 😌</div>
+    <div class="footer">made with questionable timing & genuine friendship</div>
+  </main>
+</section>
+
+<script>
+const stars=document.getElementById('stars');
+for(let i=0;i<75;i++){
+  const s=document.createElement('span'); s.className='star';
+  s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
+  s.style.animationDelay=(Math.random()*2)+'s';
+  s.style.opacity=(.2+Math.random()*.7);
+  stars.appendChild(s);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const openBtn = document.getElementById('open');
+  const letter = document.getElementById('letter');
+  const secret = document.getElementById('secret');
+  const stage = document.getElementById('surpriseStage');
+  const blowBtn = document.getElementById('blowBtn');
+  const giftArea = document.getElementById('giftArea');
+  const motionBtn = document.getElementById('motionBtn');
+  const fallbackBtn = document.getElementById('fallbackBtn');
+  const giftBox = document.getElementById('giftBox');
+  const status = document.getElementById('shakeStatus');
+  const finalNote = document.getElementById('finalNote');
+
+  let blown = false;
+  let motionActive = false;
+  let lastMagnitude = null;
+  let lastShakeTime = 0;
+  let shakeCount = 0;
+  let finished = false;
+
+  function celebrate() {
+    for (let i = 0; i < 18; i++) {
+      const e = document.createElement('div');
+      e.textContent = ['❤️','✨','💗','🌙'][i % 4];
+      Object.assign(e.style, {
+        position:'fixed',
+        left:(45 + Math.random()*10) + '%',
+        top:'45%',
+        fontSize:(18 + Math.random()*18) + 'px',
+        zIndex:'1000',
+        pointerEvents:'none'
+      });
+      document.body.appendChild(e);
+      const x = (Math.random()-.5)*420;
+      const y = -(120+Math.random()*360);
+      const a = e.animate(
+        [{transform:'translate(0,0) scale(.6)',opacity:1},
+         {transform:`translate(${x}px,${y}px) scale(1.4)`,opacity:0}],
+        {duration:1200+Math.random()*600,easing:'cubic-bezier(.2,.8,.2,1)'}
+      );
+      a.onfinish = () => e.remove();
+    }
+  }
+
+  if (openBtn) {
+    openBtn.addEventListener('click', function () {
+      if (letter) letter.style.display = 'block';
+      if (letter) letter.classList.add('reveal');
+      openBtn.style.display = 'none';
+      if (secret) secret.style.display = 'block';
+      if (stage) {
+        stage.style.display = 'block';
+        stage.classList.add('reveal');
+      }
+      celebrate();
+    });
+  }
+
+  function blowCandles() {
+    if (blown) return;
+    blown = true;
+    document.querySelectorAll('.flame').forEach(function (flame, i) {
+      flame.classList.add('out');
+      const smoke = flame.parentElement.querySelector('.smoke');
+      if (smoke) setTimeout(() => smoke.classList.add('show'), 150 + i*90);
+    });
+    blowBtn.textContent = 'Wish made! ✨';
+    blowBtn.disabled = true;
+    setTimeout(function () {
+      giftArea.style.display = 'block';
+      giftArea.classList.add('reveal');
+    }, 650);
+  }
+
+  if (blowBtn) blowBtn.addEventListener('click', blowCandles);
+
+  function dropChocolates() {
+    if (finished) return;
+    finished = true;
+    giftBox.classList.add('opened');
+
+    const pieces = ['🍫','🍫','🍬','🍫','🍩','🍫','🍬','🍫','🍫','🍬'];
+    pieces.forEach(function (emoji, i) {
+      const c = document.createElement('div');
+      c.className = 'chocolate';
+      c.textContent = emoji;
+      c.style.left = (25 + Math.random()*50) + 'vw';
+      document.body.appendChild(c);
+
+      const drift = (Math.random()-.5)*260;
+      const duration = 1300 + Math.random()*1000;
+      const animation = c.animate(
+        [
+          {transform:'translate(0,0) rotate(0deg)',opacity:0},
+          {transform:`translate(${drift/3}px,120px) rotate(130deg)`,opacity:1,offset:.18},
+          {transform:`translate(${drift}px,${window.innerHeight+170}px) rotate(520deg)`,opacity:1}
+        ],
+        {duration:duration,easing:'cubic-bezier(.2,.75,.25,1)'}
+      );
+      animation.onfinish = () => c.remove();
+    });
+
+    status.textContent = '🎉 Surprise unlocked!';
+    motionBtn.style.display = 'none';
+    fallbackBtn.style.display = 'none';
+    finalNote.style.display = 'block';
+    finalNote.classList.add('reveal');
+  }
+
+  /*
+    More reliable shake detection:
+    - Uses change in acceleration magnitude rather than a fixed absolute value.
+    - Counts two shakes within 2 seconds.
+    - Works with Android Chrome where accelerationIncludingGravity is commonly available.
+  */
+  function onMotion(event) {
+    const a = event.accelerationIncludingGravity || event.acceleration;
+    if (!a) return;
+
+    const x = Number(a.x) || 0;
+    const y = Number(a.y) || 0;
+    const z = Number(a.z) || 0;
+    const magnitude = Math.sqrt(x*x + y*y + z*z);
+
+    if (lastMagnitude === null) {
+      lastMagnitude = magnitude;
+      return;
+    }
+
+    const delta = Math.abs(magnitude - lastMagnitude);
+    lastMagnitude = magnitude;
+
+    const now = Date.now();
+
+    if (delta > 6 && now - lastShakeTime > 280) {
+      lastShakeTime = now;
+      shakeCount++;
+
+      if (shakeCount === 1) {
+        status.textContent = 'I felt that! Shake once more… 📱';
+      }
+
+      if (shakeCount >= 2) {
+        dropChocolates();
+        window.removeEventListener('devicemotion', onMotion);
+      }
+    }
+
+    if (now - lastShakeTime > 2200) {
+      shakeCount = 0;
+    }
+  }
+
+  async function enableMotion() {
+    try {
+      if (!('DeviceMotionEvent' in window)) {
+        status.textContent = 'Shake detection is unavailable on this browser.';
+        fallbackBtn.style.display = 'inline-block';
+        return;
+      }
+
+      if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        const permission = await DeviceMotionEvent.requestPermission();
+        if (permission !== 'granted') {
+          status.textContent = 'Motion permission was not allowed.';
+          fallbackBtn.style.display = 'inline-block';
+          return;
+        }
+      }
+
+      window.addEventListener('devicemotion', onMotion, {passive:true});
+      motionActive = true;
+      motionBtn.textContent = 'Shake your phone! 📱';
+      status.textContent = 'Ready! Give it two gentle shakes.';
+    } catch (error) {
+      status.textContent = 'Motion access is unavailable. Use the gift button instead.';
+      fallbackBtn.style.display = 'inline-block';
+    }
+  }
+
+  if (motionBtn) motionBtn.addEventListener('click', enableMotion);
+  if (fallbackBtn) fallbackBtn.addEventListener('click', dropChocolates);
+
+  // If a user taps the gift box, do not silently trigger the surprise.
+  // Give them an explicit fallback if motion cannot be used.
+  if (giftBox) {
+    giftBox.addEventListener('click', function () {
+      if (!motionActive && !finished) {
+        fallbackBtn.style.display = 'inline-block';
+        status.textContent = 'Tap “Open the gift” if your phone cannot detect shaking.';
+      }
+    });
+    giftBox.addEventListener('keydown', function (e) {
+      if ((e.key === 'Enter' || e.key === ' ') && !motionActive && !finished) {
+        e.preventDefault();
+        fallbackBtn.style.display = 'inline-block';
+      }
+    });
+  }
+});
+
+</script>
+</body>
+</html>
